@@ -4,6 +4,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include <Runtime\Engine\Classes\Kismet\GameplayStatics.h>
 
 // Sets default values for this component's properties
@@ -19,6 +20,11 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
 }
 
 // Called when the game starts
@@ -43,6 +49,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 
 	if (!Barrel) { return; }
+	if (!Turret) { return; }
 	auto OurTankName = GetOwner()->GetName();
 	//auto BarrelLocation = Barrel->GetComponentLocation();
 
@@ -71,31 +78,33 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString());
 		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s, LaunchSpeed: %f"), *OurTankName, *AimDirection.ToString(), LaunchSpeed);
-		MoveBarrelTowards(AimDirection);
+		MoveTAndBTowards(AimDirection);
 		float time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f , aim solve found"), time);
+		//UE_LOG(LogTemp, Warning, TEXT("%f , aim solve found"), time);
 
 
 	}
 	else
 	{
 		float time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f , No aim solve found"), time);
+		//UE_LOG(LogTemp, Warning, TEXT("%f , No aim solve found"), time);
 
 	}
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::MoveTAndBTowards(FVector AimDirection)
 {
 
 	//Work out difference between current barrel rotation and aim direction
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
-	auto DeltaRotation = AimAsRotator - BarrelRotator;
+	auto DeltaBRotation = AimAsRotator - BarrelRotator;
+	auto DeltaTRotation = AimAsRotator - TurretRotator;
 
 
-
-	Barrel->Elevate(DeltaRotation.Pitch); //TODO REMOVE MAGIC NUMBER
+	Turret->Rotate(DeltaTRotation.Yaw);
+	Barrel->Elevate(DeltaBRotation.Pitch); //TODO REMOVE MAGIC NUMBER
 
 
 
