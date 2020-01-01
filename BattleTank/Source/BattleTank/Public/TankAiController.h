@@ -24,6 +24,10 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	//How Close can the Ai get to you
+	float AcceptanceRadius = 0.0f;
+
 
 	
 };

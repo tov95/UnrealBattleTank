@@ -27,6 +27,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 	Turret = TurretToSet;
 }
 
+
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
 {
