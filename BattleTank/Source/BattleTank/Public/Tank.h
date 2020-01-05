@@ -26,7 +26,7 @@ public:
 	void AimAt(FVector HitLocation);
 
 
-	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+	//void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 
 
