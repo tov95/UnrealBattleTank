@@ -27,10 +27,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = FBWInput)
 	void IntendRotateRight(float Throw);
 
-	UFUNCTION(BlueprintCallable, Category = FBWInput)
-	void IntendRotateLeft(float Throw);
 
-	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 
 	//TODO Check best protection
 
@@ -38,7 +36,7 @@ private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
 	UStaticMeshComponent* Tank = nullptr;
-	
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 
 };
