@@ -25,6 +25,8 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 	auto TankName = GetName();
 	UE_LOG(LogTemp, Warning, TEXT("%s DONKEY: Tank C++ BeginPlay"), *TankName)
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	
 }
 

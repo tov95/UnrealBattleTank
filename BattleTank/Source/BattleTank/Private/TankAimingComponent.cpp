@@ -74,7 +74,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	if(bHaveAimSolution)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString());
 		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s, LaunchSpeed: %f"), *OurTankName, *AimDirection.ToString(), LaunchSpeed);
 		MoveTAndBTowards(AimDirection);
 		float time = GetWorld()->GetTimeSeconds();
