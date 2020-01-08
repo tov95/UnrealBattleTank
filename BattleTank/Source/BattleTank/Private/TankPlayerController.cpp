@@ -50,7 +50,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()){return; }
+	if (!ensure(GetControlledTank())){return; }
 
 	FVector OUTHitLocation; // OUT PARAMETER
 	if (GetSightRayHitLocation(OUTHitLocation)) //Going to line trace

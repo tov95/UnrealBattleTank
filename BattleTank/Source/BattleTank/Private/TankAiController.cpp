@@ -20,8 +20,8 @@ void ATankAiController::Tick(float DeltaTime)
 	auto* GetControlledTank = Cast<ATank>(GetPawn());
 
 
-	if (!GetPlayerTank) { return; }
-	if (!GetControlledTank) { return; }
+	if (!ensure(GetPlayerTank)) { return; }
+	if (!ensure(GetControlledTank)) { return; }
 	if (GetPlayerTank)
 	{
 
