@@ -24,6 +24,7 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	FVector AimDirection;
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
@@ -47,6 +48,8 @@ private:
 		float CrossHairYLocation = 0.3333f;
 
 	FVector2D ScreenLocation;
+
+
 
 	UPROPERTY(EditAnywhere)
 		float LineTraceRange = 1000000;
