@@ -8,6 +8,7 @@
 
 class UTankBarrel; //Forward Declaration
 class UTankTurret;
+class AProjectile;
 
 //Enum Class for states
 UENUM()
@@ -37,6 +38,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Fire();
+
+
+
+	float ReloadTimeInSeconds = 3.0f;
+	double LastFireTime = 0;
 
 
 protected:
@@ -53,6 +61,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 4000;
 
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+		TSubclassOf<AProjectile> ProjectileBlueprint;
 
 		
 };
