@@ -9,7 +9,6 @@
 
 
 //Forward Declarations
-class ATank;
 class UTankAimingComponent;
 
 UCLASS()
@@ -40,9 +39,6 @@ private:
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 
-
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
 
 	UPROPERTY(EditAnywhere)
 		float CrossHairXLocation = 0.5f;

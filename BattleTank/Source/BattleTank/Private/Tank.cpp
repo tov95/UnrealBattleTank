@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "Tank.h"
@@ -26,7 +25,6 @@ void ATank::BeginPlay()
 	auto TankName = GetName();
 	UE_LOG(LogTemp, Warning, TEXT("%s DONKEY: Tank C++ BeginPlay"), *TankName)
 
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	
 }
 
@@ -38,19 +36,6 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-}
-
-//void ATank::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
-//{
-//	if (!TankAimingComponent) { return; }
-//	TankAimingComponent->Initialise(BarrelToSet, TurretToSet);
-//
-//	Barrel = BarrelToSet;
-//}
 
 
 
