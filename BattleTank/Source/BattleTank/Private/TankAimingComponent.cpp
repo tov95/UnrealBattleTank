@@ -32,6 +32,11 @@ EFiringState UTankAimingComponent::GetFiringState() const
 	return EFiringState();
 }
 
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
+}
+
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
 {
@@ -48,7 +53,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	//Ask if it is still reloading
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (RoundsLeft <= 0)
+	{
+		FiringState = EFiringState::OutOfAmmo;
+	}
+	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
 		FiringState = EFiringState::Reloading;
 		//TODO Aiming and locked state
@@ -151,7 +160,8 @@ void UTankAimingComponent::Fire()
 {
 
 	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
-	if (FiringState  != EFiringState::Reloading)
+
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
 	{
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
@@ -162,6 +172,11 @@ void UTankAimingComponent::Fire()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		RoundsLeft--;
+
 	}
+
+
+
 
 }
