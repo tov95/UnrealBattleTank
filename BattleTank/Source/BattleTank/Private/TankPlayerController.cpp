@@ -50,7 +50,9 @@ void ATankPlayerController::AimTowardsCrosshair()
 	if (!ensure(AimingComponent)){return; }
 
 	FVector OUTHitLocation; // OUT PARAMETER
-	if (GetSightRayHitLocation(OUTHitLocation)) //Going to line trace
+	bool BGotHitLocation = GetSightRayHitLocation(OUTHitLocation);
+
+	if (BGotHitLocation) //Going to line trace
 	{
 		AimingComponent->AimAt(OUTHitLocation);
 		//Tell turret to aim at the spot
@@ -76,7 +78,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) con
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		GetLookVectorHitLocation(OutHitLocation, LookDirection);
+		return GetLookVectorHitLocation(OutHitLocation, LookDirection);
 	}
 
 	if (OutHitLocation != FVector(0)) {

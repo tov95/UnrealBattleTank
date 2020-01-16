@@ -51,6 +51,8 @@ public:
 	float ReloadTimeInSeconds = 3.0f;
 	double LastFireTime = 0;
 
+	EFiringState GetFiringState() const;
+
 
 protected:
 	// Called when the game starts

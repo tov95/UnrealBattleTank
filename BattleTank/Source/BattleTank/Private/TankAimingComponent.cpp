@@ -26,6 +26,12 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+
+	return EFiringState();
+}
+
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
 {
@@ -65,7 +71,7 @@ bool UTankAimingComponent::IsBarrelMoving()
 
 	if (!ensure(Barrel)) { return false; }
 	auto BarrelRotator = Barrel->GetForwardVector();
-	return !BarrelRotator.Equals(AimDirection, 1.0f);
+	return !BarrelRotator.Equals(AimDirection, 0.1f);
 
 }	
 
@@ -125,7 +131,15 @@ void UTankAimingComponent::MoveTAndBTowards(FVector AimDirection)
 	auto DeltaTRotation = AimAsRotator - TurretRotator;
 
 
-	Turret->Rotate(DeltaTRotation.Yaw);
+
+	if (FMath::Abs(DeltaTRotation.Yaw) > 180.0f)
+	{
+		Turret->Rotate(-DeltaTRotation.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(DeltaTRotation.Yaw);
+	}
 	Barrel->Elevate(DeltaBRotation.Pitch); //TODO REMOVE MAGIC NUMBER
 
 
