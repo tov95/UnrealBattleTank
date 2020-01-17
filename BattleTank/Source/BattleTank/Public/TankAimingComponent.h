@@ -48,8 +48,9 @@ public:
 	void Fire();
 
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 0.1f;
 
-	float ReloadTimeInSeconds = 3.0f;
 	float AmmoLoadTimeInSeconds = 6.0f;
 	double LastFireTime = 0;
 	double LastAmmoTime = 0;
@@ -57,9 +58,10 @@ public:
 	EFiringState GetFiringState() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	int GetRoundsLeft() const;
+	int32 GetRoundsLeft() const;
 
-	int RoundsLeft = 3;
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	int32 RoundsLeft = 3;
 
 
 protected:

@@ -25,6 +25,8 @@ void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UP
 UTankTrack::UTankTrack()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	SetNotifyRigidBodyCollision(true);
+
 
 }
 
