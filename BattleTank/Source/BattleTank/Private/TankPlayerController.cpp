@@ -3,6 +3,7 @@
 
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 #include "BattleTank.h"
 
 
@@ -14,6 +15,18 @@ void ATankPlayerController::Tick(float DeltaTime)
 	//UE_LOG(LogTemp, Warning, TEXT("PlayerController tick"));
 
 
+}
+
+void ATankPlayerController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPlayerPossessedTankDeath);
+		//subscribe to tank death event
+	}
 }
 
 void ATankPlayerController::BeginPlay()
@@ -98,6 +111,12 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, WorldLocation, LookDirection);
 
 
+}
+
+void ATankPlayerController::OnPlayerPossessedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Player died"));
+	StartSpectatingOnly();
 }
 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector& OUTHitLocation, FVector LookDirection) const

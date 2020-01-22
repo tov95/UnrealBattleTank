@@ -5,9 +5,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Tank.generated.h"
 
 //Forward Declaration
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
 
 UCLASS()
@@ -23,6 +26,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealthPercent() const;
 
+	UPROPERTY(BlueprintAssignable, Category = "DeathEvent")
+	FTankDelegate OnDeath;
 
 
 
@@ -35,7 +40,11 @@ protected:
 	int32 StartingHealth = 100;
 
 	UPROPERTY(VisibleAnywhere, Category = "Health")
-	int32 CurrentHealth = StartingHealth;
+	int32 CurrentHealth;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Health")
+	bool Dead = false;
+
 
 
 private:

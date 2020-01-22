@@ -11,7 +11,12 @@ ATank::ATank()
 
 	auto TankName = GetName();
 	UE_LOG(LogTemp, Warning, TEXT("%s DONKEY: Tank C++ Constructor"), *TankName)
-	//No Need to protect points as added at construction
+		//No Need to protect points as added at construction
+
+
+
+
+
 
 
 }
@@ -31,7 +36,9 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, ACo
 	CurrentHealth -= ActualDamage;
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Died"));
+		OnDeath.Broadcast();
+
+		
 	}
 
 
@@ -44,6 +51,8 @@ void ATank::BeginPlay()
 	Super::BeginPlay();
 	auto TankName = GetName();
 	UE_LOG(LogTemp, Warning, TEXT("%s DONKEY: Tank C++ BeginPlay"), *TankName)
+	CurrentHealth = StartingHealth;
+
 
 	
 }

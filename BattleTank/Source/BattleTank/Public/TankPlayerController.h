@@ -24,11 +24,14 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	virtual void SetPawn(APawn* InPawn) override;
 	FVector AimDirection;
+
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+
 
 
 private:
@@ -49,7 +52,8 @@ private:
 
 	FVector2D ScreenLocation;
 
-
+	UFUNCTION()
+		void OnPlayerPossessedTankDeath();
 
 	UPROPERTY(EditAnywhere)
 		float LineTraceRange = 1000000;
