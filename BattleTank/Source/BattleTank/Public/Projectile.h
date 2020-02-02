@@ -35,6 +35,10 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Firing")
 	URadialForceComponent* RadialForce = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Firing")
+	UStaticMeshComponent* BulletMesh = nullptr;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

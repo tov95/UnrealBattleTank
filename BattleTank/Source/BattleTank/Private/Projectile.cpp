@@ -19,8 +19,10 @@ AProjectile::AProjectile()
 	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
 	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Blast"));
 	RadialForce = CreateDefaultSubobject<URadialForceComponent>(FName("RadialForce"));
+	BulletMesh  = CreateDefaultSubobject<UStaticMeshComponent>(FName("Bullet Mesh"));
 	ImpactBlast->bAutoActivate = false;
 	RadialForce->bAutoActivate = true;
+
 
 }
 
@@ -31,6 +33,8 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	RadialForce->FireImpulse();
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent();
+	BulletMesh->DestroyComponent();
+
 
 	UGameplayStatics::ApplyRadialDamage(
 		this,
@@ -58,6 +62,7 @@ void AProjectile::BeginPlay()
 	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	RadialForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	BulletMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
