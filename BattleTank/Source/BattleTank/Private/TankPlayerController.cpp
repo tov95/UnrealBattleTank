@@ -32,6 +32,7 @@ void ATankPlayerController::SetPawn(APawn* InPawn)
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+	if (!ensure(GetPawn())) { return; }
 	auto ControlledTank = GetPawn();
 	if (!ControlledTank)
 	{

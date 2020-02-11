@@ -3,6 +3,7 @@
 
 #include "SpawnPont.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/SceneComponent.h"
 
 // Sets default values for this component's properties
 USpawnPont::USpawnPont()
@@ -15,14 +16,15 @@ USpawnPont::USpawnPont()
 }
 
 
+
 // Called when the game starts
 void USpawnPont::BeginPlay()
 {
 	Super::BeginPlay();
-	auto NewActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());
-	if (!NewActor) { return; }
-	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
-	UGameplayStatics::FinishSpawningActor(NewActor, GetComponentTransform());
+	SpawnedActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());
+	if (!SpawnedActor) { return; }
+	SpawnedActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
+	UGameplayStatics::FinishSpawningActor(SpawnedActor, GetComponentTransform());
 
 	// ...
 	

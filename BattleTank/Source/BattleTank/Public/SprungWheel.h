@@ -27,8 +27,16 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void AddDrivingForce(float ForceMagnitude);
+
+
+
 private:
 
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	void ApplyForce();
 
 	UPROPERTY(VisibleAnywhere, Category = "Meshes")
 	USphereComponent* Axel = nullptr;
@@ -41,5 +49,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Physics")
 	UPhysicsConstraintComponent* AxelConstraint = nullptr;
+
+	float TotalForceMagnitudeThisFrame = 0.f;
 
 };
